@@ -103,7 +103,6 @@ while (~converged && it < maxIter)
     
     
     W=@(z)EhE(z)+delta3*z(:);
-    WT=@(z)FSSO2(z,mask)+delta3*z(:);
     b=reshape(Eh(y),[nx,ny,nt])+delta3*(L+S)+Z3;
     b=b(:);
     p=project(p+delta*Fold(Dx*(Unfold(X, dim, 1)), dim, 1),reg(1));
@@ -112,7 +111,7 @@ while (~converged && it < maxIter)
     r=(r(:)+delta*(W(X)-b))./(1+delta);
     %Dual Updata
     X_old=X;
-    X_new=X_old-tau*(Fold(Dx'*(Unfold(p, dim, 1)),dim,1)+Fold(Dy'*(Unfold(q, dim, 1)),dim,2)+Fold(Dt'*(Unfold(m, dim, 3)),dim,3)+reshape(WT(r),[nx,ny,nt]));
+    X_new=X_old-tau*(Fold(Dx'*(Unfold(p, dim, 1)),dim,1)+Fold(Dy'*(Unfold(q, dim, 1)),dim,2)+Fold(Dt'*(Unfold(m, dim, 3)),dim,3)+reshape(W(r),[nx,ny,nt]));
     X=2*X_new-X_old;
     
     
